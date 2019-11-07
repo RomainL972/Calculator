@@ -16,6 +16,7 @@ int element_add_number(SubExpression *expression, char digit, int sign) {
     number->type = Number;
     number->sign = sign;
     number->digits = NULL;
+    number->size = 0;
     if(digit) {
         if(element_number_add_digit(number, digit)) return 2;
     }
@@ -46,8 +47,12 @@ int element_add_reference(SubExpression **expression) {
 
 int element_number_add_digit(Element *number, char digit) {
     number->size++;
+    if(number->size == 1) {
+        number->size++;
+    }
     number->digits = realloc(number->digits, sizeof(char)*number->size);
     if(!number->digits) return 2;
-    number->digits[number->size-1] = digit;
+    number->digits[number->size-2] = digit;
+    number->digits[number->size-1] = '\0';
     return 0;
 }

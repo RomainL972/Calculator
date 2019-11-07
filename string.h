@@ -38,4 +38,9 @@ OUT:
 */
 int string_double(const char string[]);
 
+/*
+Include letter at beginning of string
+*/
+int string_include(char string[], char letter);
+
 #endif

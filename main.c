@@ -1,6 +1,7 @@
 #include "args.h"
 #include "parse_stdin.h"
 #include "structs_enums.h"
+#include "calculate.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
