@@ -26,6 +26,11 @@ int main(int argc, char const *argv[]) {
     if(args_check(argc, argv)) return 1;
     error = parse_stdin_init(tree, argv[1]);
     if(error) return error;
+    error = calculate_start(tree, argv[1]);
+    if(error) return error;
+    printf("%s\n", tree->floors[0]->expressions[0]->elements[0]->digits);
+
+    /*
     for(i = 0; i < tree->size; i++) {
         floor = tree->floors[i];
         for(j = 0; j < floor->size; j++) {
@@ -42,6 +47,6 @@ int main(int argc, char const *argv[]) {
             }
             printf("Floor %d, Expression %d: %s\n", i, j, string);
         }
-    }
+    }*/
     return 0;
 }

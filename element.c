@@ -41,6 +41,7 @@ int element_add_reference(SubExpression **expression) {
     reference->type = Reference;
     reference->child = newExpression;
     newExpression->parent = *expression;
+    newExpression->refParent = reference;
     *expression = newExpression;
     return 0;
 }

@@ -27,6 +27,7 @@ int expression_floor_add_expression(Floor *floor, SubExpression *expression) {
     expression->size = 0;
     expression->elements = NULL;
     expression->parent = NULL;
+    expression->refParent = NULL;
     expression->floor = floor;
     return 0;
 }

@@ -39,8 +39,8 @@ OUT:
 int string_double(const char string[]);
 
 /*
-Include letter at beginning of string
+Include letter at beginning of string multiple times
 */
-int string_include(char string[], char letter);
+char* string_leftpad(const char string[], char letter, int times);
 
 #endif

@@ -20,5 +20,6 @@ int calculate_addsub(SubExpression *expression, const char* digits);
 
 int calculate_minmax(Element **num1, Element **num2, const char* digits);
 int calculate_swap(Element **num1, Element **num2);
+int calculate_ref_to_number(Element *reference, Element *number);
 
 #endif

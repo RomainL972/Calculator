@@ -1,4 +1,5 @@
 #include "string.h"
+#include <stdlib.h>
 
 int string_length(const char string[]) {
     int i;
@@ -29,4 +30,22 @@ int string_double(const char string[]) {
         if(array[(unsigned int)string[i]] > 1) return 1;
     }
     return 0;
+}
+
+char* string_leftpad(const char string[], char letter, int times) {
+    int i, j;
+    char *newString = malloc(sizeof(char));
+    newString[0] = '\0';
+    for(i = 0; i < times; i++) {
+        newString = realloc(newString, sizeof(char)*i+1);
+        newString[i] = letter;
+    }
+    for(j = 0; string[j] != '\0'; j++) {
+        newString = realloc(newString, sizeof(char)*i+1);
+        newString[i] = string[j];
+        i++;
+    }
+    newString = realloc(newString, sizeof(char)*i+1);
+    newString[i] = '\0';
+    return newString;
 }

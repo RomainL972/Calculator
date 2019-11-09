@@ -33,6 +33,7 @@ struct SubExpression {
     int size;
     Element** elements;
     SubExpression* parent;
+    Element* refParent;
     Floor* floor;
 };
 
