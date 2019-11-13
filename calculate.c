@@ -28,11 +28,15 @@ int calculate_timesdiv(SubExpression *expression, const char *digits) {
     for(i = 0; i < expression->size; i++) {
         element = expression->elements[i];
         if(element->type == Number && !num1) num1=element;
-        else if(element->type == Number && !operator) timesdiv_times(num1, element, digits);
-        else if(element->type == Number) timesdiv_div(num1, element, digits);
+        else if(element->type == Number) {
+            calculate_minmax(&num1, &element, digits);
+            if(!operator) timesdiv_times(num1, element, digits);
+            else timesdiv_div(num1, element, digits);
+        }
         else if(element->type == Operator && element->operator == '*') operator=0;
         else operator=1;
-    }
+    } if(expression->refParent) calculate_ref_to_number(expression->refParent, num1);
+    else expression->elements[0] = num1;
     return 0;
 }
 
@@ -56,13 +60,14 @@ int calculate_addsub(SubExpression *expression, const char* digits) {
 }
 
 int calculate_minmax(Element** num1, Element** num2, const char* digits) {
-    /*Note: compares absolute value, not sign*/
+    /*Note: compares absolute value, not sign
+    Problem: 0001 is considered > 10
+    */
     int i;
     if((*num1)->size > (*num2)->size)
         calculate_swap(num1, num2);
-    else if((*num1)->size > (*num2)->size);
     else {
-        for(i=0; i<(*num1)->size-1; i++) {
+        for(i=0; i<(*num1)->size-2; i++) {
             if(string_contains(digits, (*num1)->digits[i]) >
                 string_contains(digits, (*num2)->digits[i])) {
                 calculate_swap(num1, num2);
@@ -86,4 +91,5 @@ int calculate_ref_to_number(Element *reference, Element *number) {
     reference->sign = number->sign;
     reference->digits = number->digits;
     reference->size = number->size;
+    return 0;
 }

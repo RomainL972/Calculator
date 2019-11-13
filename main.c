@@ -15,38 +15,15 @@ OUT:
 - Unknown error: 255
 */
 int main(int argc, char const *argv[]) {
-    int error, i, j, k;
+    int error;
+    char sign='\0';
     Expression* tree = malloc(sizeof(Expression));
-    Floor *floor;
-    SubExpression *expression;
-    Element *element;
-    char string[500];
-    char substring[5];
-    substring[1] = '\0';
     if(args_check(argc, argv)) return 1;
     error = parse_stdin_init(tree, argv[1]);
     if(error) return error;
     error = calculate_start(tree, argv[1]);
     if(error) return error;
-    printf("%s\n", tree->floors[0]->expressions[0]->elements[0]->digits);
-
-    /*
-    for(i = 0; i < tree->size; i++) {
-        floor = tree->floors[i];
-        for(j = 0; j < floor->size; j++) {
-            expression = floor->expressions[j];
-            string[0] = '\0';
-            for(k = 0; k < expression->size; k++) {
-                element = expression->elements[k];
-                if(element->type == Number) strcat(string, element->digits);
-                else if(element->type == Operator){
-                    substring[0] = element->operator;
-                    strcat(string, substring);
-                }
-                else strcat(string, "?");
-            }
-            printf("Floor %d, Expression %d: %s\n", i, j, string);
-        }
-    }*/
+    if(!tree->floors[0]->expressions[0]->elements[0]->sign) sign = '-';
+    printf("%c%s\n", sign, tree->floors[0]->expressions[0]->elements[0]->digits);
     return 0;
 }

@@ -4,8 +4,6 @@
 
 /*Flemme*/
 int addsub_prepare(Element *num1, Element *num2, const char* digits) {
-    int i;
-    char digit;
     num1->digits = string_leftpad(num1->digits, digits[0], num2->size - num1->size);
     num1->size = num2->size;
     if(num1->sign == num2->sign) addsub_add(num1, num2, digits);
@@ -38,7 +36,7 @@ int addsub_sub(Element *num1, Element *num2, const char *digits) {
     for(i = num1->size-2; i >= 0; i--) {
         intNum = string_contains(digits, num1->digits[i]) - string_contains(digits, num2->digits[i]);
         if(retenue && !(retenue=0)) intNum--;
-        if(intNum < 0 && (intNum+=length)>0 && (retenue=1));
+        if(intNum < 0 && (intNum+=length)>=0) retenue=1;
         num2->digits[i] = digits[intNum];
     }
     return 0;
