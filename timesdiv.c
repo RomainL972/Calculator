@@ -12,11 +12,11 @@ int timesdiv_times(Element* num1, Element* num2, const char* digits) {
     total.digits = malloc(1);
     somme.digits = malloc(1);
     total.digits[0] = somme.digits[0] = '\0';
-    for(i = num2->size-2; i >= 0; i--) {
-        for(j = 0; j < string_contains(digits, num2->digits[i]); j++) {
-            addsub_prepare(&somme, num1, digits);
-            string_append(somme.digits, digits[0], num2->size-2-i);
-            somme.size += num2->size-2-i;
+    for(i = num1->size-2; i >= 0; i--) {
+        for(j = 0; j < string_contains(digits, num1->digits[i]); j++) {
+            addsub_prepare(&somme, num2, digits);
+            string_append(somme.digits, digits[0], num1->size-2-i);
+            somme.size += num1->size-2-i;
             calculate_minmax(&totalPtr, &sommePtr, digits);
             addsub_prepare(totalPtr, sommePtr, digits);
             timesdiv_copy(&total, totalPtr);

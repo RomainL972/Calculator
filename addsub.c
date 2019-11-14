@@ -22,7 +22,7 @@ int addsub_add(Element *num1, Element *num2, const char *digits) {
         if(intNum >= length && (intNum-=length)<length && (retenue=1)) {
             num1->digits[i] = digits[intNum];
             if(!i){
-                num1->digits = string_leftpad(num1->digits, '1', 1);
+                num1->digits = string_leftpad(num1->digits, digits[1], 1);
                 num1->size++;
             }
         }

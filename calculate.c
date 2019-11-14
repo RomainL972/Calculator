@@ -23,7 +23,7 @@ int calculate_start(Expression *tree, const char *digits) {
 }
 
 int calculate_timesdiv(SubExpression *expression, const char *digits) {
-    int i, operator;
+    int i, operator=0;
     Element *element=NULL, *num1=NULL;
     for(i = 0; i < expression->size; i++) {
         element = expression->elements[i];
