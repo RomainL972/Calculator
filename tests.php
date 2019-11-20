@@ -79,4 +79,8 @@ $tests_array = [
     ]
 ];
 
+<<<<<<< HEAD
 return tests($tests_array);
+=======
+tests($tests_array);
+>>>>>>> a7c5aa20989ef13147cdd1ae677c3d5e8ba5b29c

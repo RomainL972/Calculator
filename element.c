@@ -1,5 +1,6 @@
 #include "element.h"
 #include "expression.h"
+#include "string_struct.h"
 #include <stdlib.h>
 
 int element_add(SubExpression *expression, Element *element) {
@@ -15,10 +16,11 @@ int element_add_number(SubExpression *expression, char digit, int sign) {
     if(element_add(expression, number)) return 2;
     number->type = Number;
     number->sign = sign;
-    number->digits = NULL;
-    number->size = 0;
+    number->digits = malloc(sizeof(String));
+    if(!number->digits) return 2;
+    string_struct_init(number->digits);
     if(digit) {
-        if(element_number_add_digit(number, digit)) return 2;
+        if(string_struct_add_char(number->digits, digit)) return 2;
     }
     return 0;
 }
@@ -43,17 +45,5 @@ int element_add_reference(SubExpression **expression) {
     newExpression->parent = *expression;
     newExpression->refParent = reference;
     *expression = newExpression;
-    return 0;
-}
-
-int element_number_add_digit(Element *number, char digit) {
-    number->size++;
-    if(number->size == 1) {
-        number->size++;
-    }
-    number->digits = realloc(number->digits, sizeof(char)*number->size);
-    if(!number->digits) return 2;
-    number->digits[number->size-2] = digit;
-    number->digits[number->size-1] = '\0';
     return 0;
 }
