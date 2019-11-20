@@ -2,9 +2,9 @@
 #include "parse_stdin.h"
 #include "structs_enums.h"
 #include "calculate.h"
+#include "string_struct.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 
 /*
 OUT:
@@ -16,14 +16,13 @@ OUT:
 */
 int main(int argc, char const *argv[]) {
     int error;
-    char sign='\0';
+    String *digits = malloc(sizeof(String));
     Expression* tree = malloc(sizeof(Expression));
     if(args_check(argc, argv)) return 1;
-    error = parse_stdin_init(tree, argv[1]);
-    if(error) return error;
-    error = calculate_start(tree, argv[1]);
-    if(error) return error;
-    if(!tree->floors[0]->expressions[0]->elements[0]->sign) sign = '-';
-    printf("%c%s\n", sign, tree->floors[0]->expressions[0]->elements[0]->digits);
+    string_struct_from_chars(digits, argv[1]);
+    if((error = parse_stdin_init(tree, digits))) return error;
+    if((error = calculate_start(tree))) return error;
+    if(!tree->floors[0]->expressions[0]->elements[0]->sign) printf("-%s\n", tree->floors[0]->expressions[0]->elements[0]->digits->str);
+    else printf("%s\n", tree->floors[0]->expressions[0]->elements[0]->digits->str);
     return 0;
 }

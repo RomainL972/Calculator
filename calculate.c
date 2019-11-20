@@ -2,9 +2,10 @@
 #include "timesdiv.h"
 #include "addsub.h"
 #include "string.h"
+#include "element_utils.h"
 #include <stdlib.h>
 
-int calculate_start(Expression *tree, const char *digits) {
+int calculate_start(Expression *tree) {
     int i, j;
     Floor *floor;
     SubExpression *expression;
@@ -13,16 +14,16 @@ int calculate_start(Expression *tree, const char *digits) {
         for(j = floor->size-1; j >= 0; j--) {
             expression = floor->expressions[j];
             if(floor->priority % 2 && expression->size > 1) {
-                calculate_timesdiv(expression, digits);
+                calculate_timesdiv(expression, tree->digits);
             }
-            else if(expression->size > 1) calculate_addsub(expression, digits);
+            else if(expression->size > 1) calculate_addsub(expression, tree->digits);
             else if(expression->refParent) element_utils_copy(expression->elements[0], expression->refParent);
         }
     }
     return 0;
 }
 
-int calculate_timesdiv(SubExpression *expression, const char *digits) {
+int calculate_timesdiv(SubExpression *expression, const String *digits) {
     int i, operator=0;
     Element *element=NULL, *num1=NULL;
     for(i = 0; i < expression->size; i++) {
@@ -40,7 +41,7 @@ int calculate_timesdiv(SubExpression *expression, const char *digits) {
     return 0;
 }
 
-int calculate_addsub(SubExpression *expression, const char* digits) {
+int calculate_addsub(SubExpression *expression, const String* digits) {
     int i, invert = 0;
     Element *element=NULL, *num1=NULL;
     for(i = 0; i < expression->size; i++) {
@@ -59,20 +60,20 @@ int calculate_addsub(SubExpression *expression, const char* digits) {
     return 0;
 }
 
-int calculate_minmax(Element** num1, Element** num2, const char* digits) {
+int calculate_minmax(Element** num1, Element** num2, const String* digits) {
     /*Note: compares absolute value, not sign
     Problem: 0001 is considered > 10
     */
-    int i;
-    if((*num1)->size > (*num2)->size)
-        calculate_swap(num1, num2);
+    int i, difference;
+    if((*num1)->digits->length > (*num2)->digits->length)
+        return calculate_swap(num1, num2);
+    else if((*num2)->digits->length > (*num1)->digits->length) return 0;
     else {
-        for(i=0; i<(*num1)->size-2; i++) {
-            if(string_contains(digits, (*num1)->digits[i]) >
-                string_contains(digits, (*num2)->digits[i])) {
-                calculate_swap(num1, num2);
-                break;
-            }
+        for(i=0; i<(*num1)->digits->length-1; i++) {
+            difference = string_contains(digits->str, (*num2)->digits->str[i]) - string_contains(digits->str, (*num1)->digits->str[i]);
+            if(!difference) continue;
+            else if(difference > 0) return 0;
+            else return calculate_swap(num1, num2);
         }
     }
     return 0;

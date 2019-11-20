@@ -14,7 +14,7 @@ FAILURE:
 - Malloc fail: 2
 - Unknown Error: 255
 */
-int parse_stdin_init(Expression *tree, const char* digits);
+int parse_stdin_init(Expression *tree, const String* digits);
 
 /*
 Parse stdin
@@ -24,7 +24,7 @@ FAILURE:
 - Malloc fail: 2
 - Unknown Error: 255
 */
-int parse_stdin_parse(SubExpression *rootSubExpression, const char* digits);
+int parse_stdin_parse(SubExpression *rootSubExpression, const String* digits);
 
 /*
 Add a digit to current expression
