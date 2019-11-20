@@ -22,7 +22,7 @@ function run($operation, $expected, $digits="0123456789") {
 }
 
 function tests($array) {
-    $success = 1;
+    $errors = 0;
     foreach ($array as $test) {
         $message = $test["label"] . ": ";
         if(!array_key_exists("digits", $test)) $test["digits"] = "0123456789";
@@ -30,10 +30,10 @@ function tests($array) {
             echo $message . "SUCCESS\n";
         else {
             echo $message . "FAILURE\n";
-            $success = 0;
+            $errors ++;
         }
     }
-    return $success;
+    return $errors;
 }
 
 $tests_array = [
@@ -79,4 +79,4 @@ $tests_array = [
     ]
 ];
 
-return tests($tests_array);
+exit(tests($tests_array));
