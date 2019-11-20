@@ -32,25 +32,6 @@ int string_double(const char string[]) {
     return 0;
 }
 
-/*TODO: error on malloc fail*/
-char* string_leftpad(const char string[], char letter, int times) {
-    int i, j;
-    char *newString = malloc(sizeof(char));
-    newString[0] = '\0';
-    for(i = 0; i < times; i++) {
-        newString = realloc(newString, sizeof(char)*i+1);
-        newString[i] = letter;
-    }
-    for(j = 0; string[j] != '\0'; j++) {
-        newString = realloc(newString, sizeof(char)*i+1);
-        newString[i] = string[j];
-        i++;
-    }
-    newString = realloc(newString, sizeof(char)*i+1);
-    newString[i] = '\0';
-    return newString;
-}
-
 int string_append(char* string, char letter, int times) {
     int i, length=string_length(string);
     string = realloc(string, sizeof(char)*(length+times));

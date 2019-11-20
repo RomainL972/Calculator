@@ -1,0 +1,48 @@
+#include "string_struct.h"
+#include "string.h"
+#include <string.h>
+#include <stdlib.h>
+
+int string_struct_from_chars(String *string, const char* char_array) {
+    string->length = string_length(char_array)+1;
+    string->str = malloc(string->length * sizeof(char));
+    memcpy(string->str, char_array, string->length*sizeof(char));
+    return 0;
+}
+
+int string_struct_add_char(String *string, char toAdd) {
+    string->length++;
+    string->str = realloc(string->str, sizeof(char)*string->length);
+    if(!string->str) return 2;
+    string->str[string->length-2] = toAdd;
+    string->str[string->length-1] = '\0';
+    return 0;
+}
+
+int string_struct_init(String *string) {
+    string->length = 1;
+    string->str = realloc(string->str, sizeof(char));
+    if(!string->str) return 2;
+    string->str[0] = '\0';
+    return 0;
+}
+
+int string_struct_copy(const String *origin, String *dest) {
+    if(!dest) if(!(dest = malloc(sizeof(String)))) return 2;
+    dest->length = origin->length;
+    dest->str = realloc(dest->str, sizeof(char)*origin->length);
+    if(!dest->str) return 2;
+    memcpy(dest->str, origin->str, dest->length*sizeof(char));
+    return 0;
+}
+
+int string_struct_prepend_chars(String *string, char toAdd, int times) {
+    String tmp = {0, NULL};
+    int i;
+    if(string_struct_init(&tmp)) return 2;
+    for(i=0; i<times; i++) tmp.str[i] = toAdd;
+    tmp.length = string->length + times;
+    memcpy(tmp.str+sizeof(char)*times, string->str, string->length*sizeof(char));
+    if(string_struct_copy(&tmp, string)) return 2;;
+    return 0;
+}

@@ -35,12 +35,4 @@ FAILURE:
 */
 int element_add_reference(SubExpression **expression);
 
-/*
-Add a digit to number
-
-FAILURE:
-- Malloc fail: 2
-*/
-int element_number_add_digit(Element *number, char digit);
-
 #endif
