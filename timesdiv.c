@@ -19,7 +19,7 @@ int timesdiv_times(Element* num1, Element* num2, const char* digits) {
             somme.size += num1->size-2-i;
             calculate_minmax(&totalPtr, &sommePtr, digits);
             addsub_prepare(totalPtr, sommePtr, digits);
-            timesdiv_copy(&total, totalPtr);
+            element_utils_copy(totalPtr, &total);
             sommePtr = &somme;
             totalPtr = &total;
             somme.digits[0] = '\0';
@@ -31,15 +31,5 @@ int timesdiv_times(Element* num1, Element* num2, const char* digits) {
 }
 
 int timesdiv_div(Element* num1, Element* num2, const char* digits) {
-    return 0;
-}
-
-int timesdiv_copy(Element *num1, Element *num2) {
-    int i;
-    if(num1 == num2) return 0;
-    num1->size = num2->size;
-    num1->digits = realloc(num1->digits, sizeof(char)*num1->size);
-    for(i = 0; i < num1->size; i++) num1->digits[i] = num2->digits[i];
-    num1->sign = num2->sign;
     return 0;
 }

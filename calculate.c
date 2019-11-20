@@ -16,7 +16,7 @@ int calculate_start(Expression *tree, const char *digits) {
                 calculate_timesdiv(expression, digits);
             }
             else if(expression->size > 1) calculate_addsub(expression, digits);
-            else if(expression->refParent) calculate_ref_to_number(expression->refParent, expression->elements[0]);
+            else if(expression->refParent) element_utils_copy(expression->elements[0], expression->refParent);
         }
     }
     return 0;
@@ -35,7 +35,7 @@ int calculate_timesdiv(SubExpression *expression, const char *digits) {
         }
         else if(element->type == Operator && element->operator == '*') operator=0;
         else operator=1;
-    } if(expression->refParent) calculate_ref_to_number(expression->refParent, num1);
+    } if(expression->refParent) element_utils_copy(num1, expression->refParent);
     else expression->elements[0] = num1;
     return 0;
 }
@@ -54,7 +54,7 @@ int calculate_addsub(SubExpression *expression, const char* digits) {
             addsub_prepare(num1, element, digits);
         } else if(element->type == Operator && element->operator == '-') {
             invert = 1;
-        }} if(expression->refParent) calculate_ref_to_number(expression->refParent, num1);
+        }} if(expression->refParent) element_utils_copy(num1, expression->refParent);
         else expression->elements[0] = num1;
     return 0;
 }
@@ -83,13 +83,5 @@ int calculate_swap(Element **num1, Element **num2) {
     tmp = *num1;
     *num1 = *num2;
     *num2 = tmp;
-    return 0;
-}
-
-int calculate_ref_to_number(Element *reference, Element *number) {
-    reference->type = Number;
-    reference->sign = number->sign;
-    reference->digits = number->digits;
-    reference->size = number->size;
     return 0;
 }
