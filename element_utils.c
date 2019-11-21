@@ -1,5 +1,6 @@
 #include "element_utils.h"
 #include "string_struct.h"
+#include "string.h"
 #include <stdlib.h>
 
 int element_utils_copy(const Element *origin, Element *dest) {
@@ -15,5 +16,14 @@ int element_utils_copy(const Element *origin, Element *dest) {
         break;
         /*TODO: Do we ever need to copy anything else?*/
     }
+    return 0;
+}
+
+int element_utils_cmp(const Element *num1, const Element *num2, const String *digits) {
+    int i, difference;
+    if((difference = num1->digits->length - num2->digits->length)) return difference;
+    for(i=0; i<num1->digits->length-1; i++)
+        if((difference = string_contains(digits->str, num1->digits->str[i]) - string_contains(digits->str, num2->digits->str[i])))
+            return difference;
     return 0;
 }

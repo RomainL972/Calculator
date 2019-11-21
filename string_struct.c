@@ -10,11 +10,14 @@ int string_struct_from_chars(String *string, const char* char_array) {
     return 0;
 }
 
-int string_struct_add_char(String *string, char toAdd) {
-    string->length++;
+int string_struct_add_chars(String *string, char toAdd, int times) {
+    int i;
+    string->length += times;
     string->str = realloc(string->str, sizeof(char)*string->length);
     if(!string->str) return 2;
-    string->str[string->length-2] = toAdd;
+    for(i = 0; i < times; i++) {
+        string->str[string->length-times-1+i] = toAdd;
+    }
     string->str[string->length-1] = '\0';
     return 0;
 }
@@ -40,9 +43,10 @@ int string_struct_prepend_chars(String *string, char toAdd, int times) {
     String tmp = {0, NULL};
     int i;
     if(string_struct_init(&tmp)) return 2;
-    for(i=0; i<times; i++) tmp.str[i] = toAdd;
     tmp.length = string->length + times;
+    tmp.str = realloc(tmp.str, sizeof(char)*(tmp.length));
+    for(i=0; i<times; i++) tmp.str[i] = toAdd;
     memcpy(tmp.str+sizeof(char)*times, string->str, string->length*sizeof(char));
-    if(string_struct_copy(&tmp, string)) return 2;;
+    if(string_struct_copy(&tmp, string)) return 2;
     return 0;
 }

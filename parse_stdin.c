@@ -39,7 +39,7 @@ int parse_stdin_add_number(SubExpression *expression, char digit) {
     if(expression->size)
         last = expression->elements[expression->size-1];
     if(last && last->type == Number) {
-        if(string_struct_add_char(last->digits, digit)) return 2;
+        if(string_struct_add_chars(last->digits, digit, 1)) return 2;
     }
     else if(!last || last->type == Operator) {
         if(element_add_number(expression, digit, 1)) return 2;

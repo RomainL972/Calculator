@@ -35,6 +35,12 @@ function tests($array) {
     }
     return $errors;
 }
+$a = random_int(1000000000000000, 9999999999999999);
+$b = random_int(1000000000000000, 9999999999999999);
+$aplusb = $a + $b;
+$c = strval(random_int(1000000000000000, 9999999999999999));
+$d = strval(random_int(1000000000000000, 9999999999999999));
+$ctimesd = bcmul($c, $d);
 
 $tests_array = [
     [
@@ -74,8 +80,34 @@ $tests_array = [
     ],
     [
         "label" => "Multiple operations and braquets",
-        "operation" => "5+(8*4+2)-5*7+(2*2)*3",
-        "expected" => "16"
+        "operation" => "5+(8/4+2)-5*7+(2*2)*3",
+        "expected" => "-14"
+    ],
+    [
+        "label" => "Big Multiplication",
+        "operation" => "6516954198498452165495616519849581949816519849879841651651*65165198495616541984984651651984",
+        "expected" => "424678613931993242192380735804898444632036142454818400507304983254637658181782488211025584"
+    ],
+    [
+        "label" => "Big Addition",
+        "operation" => "984981120006498797984651006549649841654984984651+65464987984651165498798465116164987651651651",
+        "expected" => "985046584994483449150149805014766006642636636302"
+    ],
+    [
+        "label" => "Random Addition",
+        "operation" => "$a+$b",
+        "expected" => "$aplusb"
+    ],
+    [
+        "label" => "Random Multiplication",
+        "operation" => "$c*$d",
+        "expected" => "$ctimesd"
+    ],
+    [
+        "label" => "Hexadecimal test",
+        "operation" => "caca+fade-bac",
+        "expected" => "1b9fc",
+        "digits" => "0123456789abcdef"
     ]
 ];
 

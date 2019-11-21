@@ -30,11 +30,11 @@ int calculate_timesdiv(SubExpression *expression, const String *digits) {
         element = expression->elements[i];
         if(element->type == Number && !num1) num1=element;
         else if(element->type == Number) {
-            calculate_minmax(&num1, &element, digits);
-            if(!operator) timesdiv_times(num1, element, digits);
+            if(!operator) {
+                calculate_minmax(&num1, &element, digits);
+                timesdiv_times(num1, element, digits);}
             else timesdiv_div(num1, element, digits);
-        }
-        else if(element->type == Operator && element->operator == '*') operator=0;
+        } else if(element->type == Operator && element->operator == '*') operator=0;
         else operator=1;
     } if(expression->refParent) element_utils_copy(num1, expression->refParent);
     else expression->elements[0] = num1;
@@ -51,12 +51,11 @@ int calculate_addsub(SubExpression *expression, const String* digits) {
             addsub_invert(element);
         } if(element->type == Number && !num1) num1=element;
         else if(element->type == Number) {
-            calculate_minmax(&num1, &element, digits);
-            addsub_prepare(num1, element, digits);
+            addsub_prepare(num1, num1, element, digits);
         } else if(element->type == Operator && element->operator == '-') {
             invert = 1;
-        }} if(expression->refParent) element_utils_copy(num1, expression->refParent);
-        else expression->elements[0] = num1;
+        }
+    } if(expression->refParent) element_utils_copy(num1, expression->refParent);
     return 0;
 }
 
@@ -64,18 +63,7 @@ int calculate_minmax(Element** num1, Element** num2, const String* digits) {
     /*Note: compares absolute value, not sign
     Problem: 0001 is considered > 10
     */
-    int i, difference;
-    if((*num1)->digits->length > (*num2)->digits->length)
-        return calculate_swap(num1, num2);
-    else if((*num2)->digits->length > (*num1)->digits->length) return 0;
-    else {
-        for(i=0; i<(*num1)->digits->length-1; i++) {
-            difference = string_contains(digits->str, (*num2)->digits->str[i]) - string_contains(digits->str, (*num1)->digits->str[i]);
-            if(!difference) continue;
-            else if(difference > 0) return 0;
-            else return calculate_swap(num1, num2);
-        }
-    }
+    if(element_utils_cmp(*num1, *num2, digits) > 0) calculate_swap(num1, num2);
     return 0;
 }
 

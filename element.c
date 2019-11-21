@@ -20,7 +20,7 @@ int element_add_number(SubExpression *expression, char digit, int sign) {
     if(!number->digits) return 2;
     string_struct_init(number->digits);
     if(digit) {
-        if(string_struct_add_char(number->digits, digit)) return 2;
+        if(string_struct_add_chars(number->digits, digit, 1)) return 2;
     }
     return 0;
 }

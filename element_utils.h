@@ -11,4 +11,11 @@ FAILURE:
 */
 int element_utils_copy(const Element *origin, Element *dest);
 
+/*
+Returns 1 if num1>num2,
+0 if num1==num2,
+-1 if num1<num2
+*/
+int element_utils_cmp(const Element *num1, const Element *num2, const String *digits);
+
 #endif

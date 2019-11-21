@@ -9,9 +9,9 @@ Creates a string from a char array
 int string_struct_from_chars(String *string, const char* char_array);
 
 /*
-Adds a char to string
+Adds a char to string, possibly multiple times
 */
-int string_struct_add_char(String *string, char toAdd);
+int string_struct_add_chars(String *string, char toAdd, int times);
 
 /*
 Sets default values to string

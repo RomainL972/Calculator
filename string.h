@@ -38,9 +38,4 @@ OUT:
 */
 int string_double(const char string[]);
 
-/*
-Appends letter to string multiple times
-*/
-int string_append(char* string, char letter, int times);
-
 #endif

@@ -10,32 +10,38 @@
 /*TODO optimize this function*/
 int timesdiv_times(Element* num1, Element* num2, const String* digits) {
     int i, j;
-    Element total = {Number, 0, NULL, 1, NULL}, somme = {Number, 0, NULL, 1, NULL}, *totalPtr=&total, *sommePtr=&somme;
+    Element total = {Number, 0, NULL, 1, NULL}, somme = {Number, 0, NULL, 1, NULL};
     total.digits = malloc(sizeof(String));
     somme.digits = malloc(sizeof(String));
     string_struct_init(total.digits);
     string_struct_init(somme.digits);
     for(i = num1->digits->length-2; i >= 0; i--) {
         for(j = 0; j < string_contains(digits->str, num1->digits->str[i]); j++) {
-            addsub_prepare(&somme, num2, digits);
-            string_append(somme.digits->str, digits->str[0], num1->digits->length-2-i);
-            somme.digits->length += num1->digits->length-2-i;
-            calculate_minmax(&totalPtr, &sommePtr, digits);
-            addsub_prepare(totalPtr, sommePtr, digits);
-            element_utils_copy(totalPtr, &total);
-            sommePtr = &somme;
-            totalPtr = &total;
-            somme.digits->str[0] = '\0';
-            somme.digits->length = 1;
-    }} num1->digits->str = total.digits->str;
-    num1->digits->length = total.digits->length;
-    num1->sign = !(num1->sign ^ num2->sign);
+            addsub_prepare(&somme, &somme, num2, digits);
+            if(num1->digits->length-2-i) string_struct_add_chars(somme.digits, digits->str[0], num1->digits->length-2-i);
+            addsub_prepare(&total, &total, &somme, digits);
+            string_struct_init(somme.digits);
+    }} total.sign = !(num1->sign ^ num2->sign);
+    element_utils_copy(&total, num1);
     return 0;
 }
 
+/*When number of digits in num1 goes up, function becomes VERY slow*/
 int timesdiv_div(Element* num1, Element* num2, const String* digits) {
-    free(num1);
-    free(num2);
-    if(digits){};
+    Element total = {Number, 0, NULL, 1, NULL}, result = {Number, 0, NULL, 1, NULL}, one = {Number, 0, NULL, 1, NULL};
+    total.digits = malloc(sizeof(String));
+    result.digits = malloc(sizeof(String));
+    one.digits = malloc(sizeof(String));
+    string_struct_init(total.digits);
+    string_struct_init(result.digits);
+    string_struct_init(one.digits);
+    string_struct_add_chars(one.digits, digits->str[1], 1);
+    addsub_prepare(&total, &total, num2, digits);
+    while(element_utils_cmp(&total, num1, digits)<=0) {
+        addsub_prepare(&result, &result, &one, digits);
+        addsub_prepare(&total, &total, num2, digits);
+    }
+    result.sign = !(num1->sign ^ num2->sign);
+    element_utils_copy(&result, num1);
     return 0;
 }
