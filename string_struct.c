@@ -24,7 +24,7 @@ int string_struct_add_chars(String *string, char toAdd, int times) {
 
 int string_struct_init(String *string) {
     string->length = 1;
-    string->str = realloc(string->str, sizeof(char));
+    string->str = malloc(sizeof(char));
     if(!string->str) return 2;
     string->str[0] = '\0';
     return 0;
