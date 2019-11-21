@@ -3,9 +3,14 @@
 
 #include "structs_enums.h"
 
-int timesdiv_times(Element* num1, Element* num2, const char* digits);
-int timesdiv_div(Element* num1, Element* num2, const char* digits);
-int timesdiv_minmax(Element** num1, Element** num2, const char* digits);
-int timesdiv_copy(Element *num1, Element *num2);
+/*
+Sets num1 to num1*num2
+*/
+int timesdiv_times(Element* num1, Element* num2, const String* digits);
+
+/*
+Sets num1 to num1/num2
+*/
+int timesdiv_div(Element* num1, Element* num2, const String* digits);
 
 #endif

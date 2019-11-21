@@ -1,2 +1,3 @@
 Loads of optimization
 Review requirements
+Operations should require greater number before lower number

@@ -3,24 +3,26 @@
 #include "structs_enums.h"
 #include "string.h"
 #include "element.h"
+#include "string_struct.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-int parse_stdin_init(Expression *tree, const char* digits) {
+int parse_stdin_init(Expression *tree, const String* digits) {
     SubExpression * subExpression = malloc(sizeof(SubExpression));
     if(!tree) return 2;
     tree->size = 0;
     tree->floors = NULL;
+    tree->digits = digits;
     if(expression_add_floor(tree, subExpression)) return 2;
     return parse_stdin_parse(subExpression, digits);
 }
 
-int parse_stdin_parse(SubExpression *rootExpression, const char* digits){
+int parse_stdin_parse(SubExpression *rootExpression, const String* digits){
     signed char input;
     int error;
     SubExpression *currentExpression = rootExpression;
     while((input = (signed char)getchar()) != EOF && input != '\n') {
-        if(string_contains(digits, input) != -1) {
+        if(string_contains(digits->str, input) != -1) {
             error = parse_stdin_add_number(currentExpression, input);
         } else if(string_contains("+-*/()", input) != -1) {
             error = parse_stdin_add_operator(&currentExpression, input);
@@ -37,7 +39,7 @@ int parse_stdin_add_number(SubExpression *expression, char digit) {
     if(expression->size)
         last = expression->elements[expression->size-1];
     if(last && last->type == Number) {
-        if(element_number_add_digit(last, digit)) return 2;
+        if(string_struct_add_chars(last->digits, digit, 1)) return 2;
     }
     else if(!last || last->type == Operator) {
         if(element_add_number(expression, digit, 1)) return 2;

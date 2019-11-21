@@ -38,11 +38,4 @@ OUT:
 */
 int string_double(const char string[]);
 
-/*
-Include letter at beginning of string multiple times
-*/
-char* string_leftpad(const char string[], char letter, int times);
-
-int string_append(char* string, char letter, int times);
-
 #endif
