@@ -24,12 +24,12 @@ function run($operation, $expected, $digits="0123456789") {
 function tests($array) {
     $errors = 0;
     foreach ($array as $test) {
-        $message = $test["label"] . ": ";
+        $message = str_pad($test["label"], 50);
         if(!array_key_exists("digits", $test)) $test["digits"] = "0123456789";
         if(run($test["operation"], $test["expected"], $test["digits"]))
-            echo $message . "SUCCESS\n";
+            echo $message . ": \033[01;32mSUCCESS\033[0m\n";
         else {
-            echo $message . "FAILURE\n";
+            echo $message . ": \033[01;31mFAILURE\033[0m\n";
             $errors ++;
         }
     }
