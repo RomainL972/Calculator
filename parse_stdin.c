@@ -18,10 +18,10 @@ int parse_stdin_init(Expression *tree, const String* digits) {
 }
 
 int parse_stdin_parse(SubExpression *rootExpression, const String* digits){
-    char input;
+    signed char input;
     int error;
     SubExpression *currentExpression = rootExpression;
-    while((input = (char)getchar()) != EOF && input != '\n') {
+    while((input = (signed char)getchar()) != EOF && input != '\n') {
         if(string_contains(digits->str, input) != -1) {
             error = parse_stdin_add_number(currentExpression, input);
         } else if(string_contains("+-*/()", input) != -1) {
