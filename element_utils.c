@@ -9,7 +9,10 @@ int element_utils_copy(const Element *origin, Element *dest) {
     switch(origin->type) {
         case Number:
         dest->sign = origin->sign;
-        if(!(dest->digits = realloc(dest->digits, sizeof(String)))) return 2;
+        free(dest->digits);
+        if(!(dest->digits = malloc(sizeof(String)))) return 2;
+        dest->digits->str = malloc(sizeof(char));
+        string_struct_init(dest->digits);
         return string_struct_copy(origin->digits, dest->digits);
         break;
         default:
