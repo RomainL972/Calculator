@@ -104,10 +104,37 @@ $tests_array = [
         "expected" => "$ctimesd"
     ],
     [
-        "label" => "Hexadecimal test",
+        "label" => "Hexadecimal",
         "operation" => "caca+fade-bac",
         "expected" => "1b9fc",
         "digits" => "0123456789abcdef"
+    ],
+    [
+        "label" => "Binary",
+        "operation" => "101010+1001",
+        "expected" => "110011",
+        "digits" => "01"
+    ],
+    [
+        "label" => "Division with remainder",
+        "operation" => "58975/42",
+        "expected" => "1404"
+    ],
+    [
+        "label" => "Special Characters",
+        "operation" => "bd/b+f",
+        "expected" => "ah",
+        "digits" => "0abcdefghi"
+    ],
+    [
+        "label" => "Negative substraction",
+        "operation" => "39-87",
+        "expected" => "-48",
+    ],
+    [
+        "label" => "Minus number",
+        "operation" => "-64",
+        "expected" => "-64",
     ]
 ];
 

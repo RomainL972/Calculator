@@ -53,9 +53,9 @@ int calculate_addsub(SubExpression *expression, const String* digits) {
         else if(element->type == Number) {
             addsub_prepare(num1, num1, element, digits);
         } else if(element->type == Operator && element->operator == '-') {
-            invert = 1;
-        }
+            invert = 1;}
     } if(expression->refParent) element_utils_copy(num1, expression->refParent);
+    else if(expression->elements[0]->type == Operator) element_utils_copy(num1, expression->elements[0]);
     return 0;
 }
 
