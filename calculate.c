@@ -18,7 +18,10 @@ int calculate_start(Expression *tree) {
                 calculate_timesdiv(expression, tree->digits);
             }
             else if(expression->size > 1) calculate_addsub(expression, tree->digits);
-            else if(expression->refParent) element_utils_copy(expression->elements[0], expression->refParent);
+            else if(expression->refParent) {
+                element_utils_copy(expression->elements[0], expression->refParent);
+                element_utils_free(expression->elements[0]);
+            }
             if(floor->priority != 0) {
                 free(expression->elements);
                 free(expression);
