@@ -1,5 +1,5 @@
-![](https://github.com/RomainL972/Calculator/workflows/C/C++%20CI/badge.svg)
 # Calculator
+[![Build Status](https://github.com/RomainL972/Calculator/workflows/C/C++%20CI/badge.svg)](https://github.com/RomainL972/Calculator/actions)
 
 This is an arbitrary-precision calculator
 
