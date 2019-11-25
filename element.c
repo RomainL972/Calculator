@@ -18,6 +18,7 @@ int element_add_number(SubExpression *expression, char digit, int sign) {
     number->sign = sign;
     number->digits = malloc(sizeof(String));
     if(!number->digits) return 2;
+    number->digits->str = NULL;
     string_struct_init(number->digits);
     if(digit) {
         if(string_struct_add_chars(number->digits, digit, 1)) return 2;

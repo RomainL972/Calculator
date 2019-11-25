@@ -3,23 +3,17 @@
 #include "string.h"
 #include <stdlib.h>
 
+/*Only converts to Number*/
 int element_utils_copy(const Element *origin, Element *dest) {
     if(dest == origin) return 0;
-    dest->type = origin->type;
-    switch(origin->type) {
-        case Number:
-        dest->sign = origin->sign;
-        free(dest->digits);
+    if(dest->type != origin->type) {
         if(!(dest->digits = malloc(sizeof(String)))) return 2;
-        dest->digits->str = malloc(sizeof(char));
-        string_struct_init(dest->digits);
-        return string_struct_copy(origin->digits, dest->digits);
-        break;
-        default:
-        break;
-        /*TODO: Do we ever need to copy anything else?*/
+        dest->digits->str = NULL;
     }
-    return 0;
+    dest->type = origin->type;
+    dest->sign = origin->sign;
+    string_struct_init(dest->digits);
+    return string_struct_copy(origin->digits, dest->digits);
 }
 
 int element_utils_cmp(const Element *num1, const Element *num2, const String *digits) {
@@ -28,5 +22,14 @@ int element_utils_cmp(const Element *num1, const Element *num2, const String *di
     for(i=0; i<num1->digits->length-1; i++)
         if((difference = string_contains(digits->str, num1->digits->str[i]) - string_contains(digits->str, num2->digits->str[i])))
             return difference;
+    return 0;
+}
+
+int element_utils_free(Element *element) {
+    if(element->type == Number) {
+        free(element->digits->str);
+        free(element->digits);
+    }
+    free(element);
     return 0;
 }

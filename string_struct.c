@@ -5,7 +5,7 @@
 
 int string_struct_from_chars(String *string, const char* char_array) {
     string->length = string_length(char_array)+1;
-    string->str = malloc(string->length * sizeof(char));
+    string->str = realloc(string->str, string->length * sizeof(char));
     memcpy(string->str, char_array, string->length*sizeof(char));
     return 0;
 }
@@ -24,8 +24,10 @@ int string_struct_add_chars(String *string, char toAdd, int times) {
 
 int string_struct_init(String *string) {
     string->length = 1;
-    string->str = malloc(sizeof(char));
-    if(!string->str) return 2;
+    if(!string->str) {
+        if(!(string->str = malloc(sizeof(char)))) return 2;
+    }
+    else if (!(string->str = realloc(string->str, sizeof(char)))) return 2;
     string->str[0] = '\0';
     return 0;
 }
@@ -48,5 +50,6 @@ int string_struct_prepend_chars(String *string, char toAdd, int times) {
     for(i=0; i<times; i++) tmp.str[i] = toAdd;
     memcpy(tmp.str+sizeof(char)*times, string->str, string->length*sizeof(char));
     if(string_struct_copy(&tmp, string)) return 2;
+    free(tmp.str);
     return 0;
 }

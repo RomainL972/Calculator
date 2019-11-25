@@ -3,6 +3,8 @@
 #include "structs_enums.h"
 #include "calculate.h"
 #include "string_struct.h"
+#include "element_utils.h"
+#include "free_main.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -18,11 +20,14 @@ int main(int argc, char const *argv[]) {
     int error;
     String *digits = malloc(sizeof(String));
     Expression* tree = malloc(sizeof(Expression));
+    digits->str = NULL;
+    string_struct_init(digits);
     if(args_check(argc, argv)) return 1;
     string_struct_from_chars(digits, argv[1]);
     if((error = parse_stdin_init(tree, digits))) return error;
     if((error = calculate_start(tree))) return error;
     if(!tree->floors[0]->expressions[0]->elements[0]->sign) printf("-%s\n", tree->floors[0]->expressions[0]->elements[0]->digits->str);
     else printf("%s\n", tree->floors[0]->expressions[0]->elements[0]->digits->str);
+    free_main(tree, digits);
     return 0;
 }

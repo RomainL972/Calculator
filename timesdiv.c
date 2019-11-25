@@ -13,6 +13,8 @@ int timesdiv_times(Element* num1, Element* num2, const String* digits) {
     Element total = {Number, 0, NULL, 1, NULL}, somme = {Number, 0, NULL, 1, NULL};
     total.digits = malloc(sizeof(String));
     somme.digits = malloc(sizeof(String));
+    total.digits->str = NULL;
+    somme.digits->str = NULL;
     string_struct_init(total.digits);
     string_struct_init(somme.digits);
     for(i = num1->digits->length-2; i >= 0; i--) {
@@ -23,6 +25,10 @@ int timesdiv_times(Element* num1, Element* num2, const String* digits) {
             string_struct_init(somme.digits);
     }} total.sign = !(num1->sign ^ num2->sign);
     element_utils_copy(&total, num1);
+    free(total.digits->str);
+    free(total.digits);
+    free(somme.digits->str);
+    free(somme.digits);
     return 0;
 }
 
@@ -32,6 +38,9 @@ int timesdiv_div(Element* num1, Element* num2, const String* digits) {
     total.digits = malloc(sizeof(String));
     result.digits = malloc(sizeof(String));
     one.digits = malloc(sizeof(String));
+    total.digits->str = NULL;
+    result.digits->str = NULL;
+    one.digits->str = NULL;
     string_struct_init(total.digits);
     string_struct_init(result.digits);
     string_struct_init(one.digits);
@@ -43,5 +52,11 @@ int timesdiv_div(Element* num1, Element* num2, const String* digits) {
     }
     result.sign = !(num1->sign ^ num2->sign);
     element_utils_copy(&result, num1);
+    free(total.digits->str);
+    free(total.digits);
+    free(result.digits->str);
+    free(result.digits);
+    free(one.digits->str);
+    free(one.digits);
     return 0;
 }

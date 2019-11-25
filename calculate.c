@@ -4,6 +4,7 @@
 #include "string.h"
 #include "element_utils.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int calculate_start(Expression *tree) {
     int i, j;
@@ -18,6 +19,15 @@ int calculate_start(Expression *tree) {
             }
             else if(expression->size > 1) calculate_addsub(expression, tree->digits);
             else if(expression->refParent) element_utils_copy(expression->elements[0], expression->refParent);
+            if(floor->priority != 0) {
+                free(expression->elements);
+                free(expression);
+            }
+        }
+        if(floor->priority != 0) {
+            free(floor->expressions);
+            free(floor);
+            tree->floors[i] = NULL;
         }
     }
     return 0;
@@ -36,7 +46,11 @@ int calculate_timesdiv(SubExpression *expression, const String *digits) {
             else timesdiv_div(num1, element, digits);
         } else if(element->type == Operator && element->operator == '*') operator=0;
         else operator=1;
-    } if(expression->refParent) element_utils_copy(num1, expression->refParent);
+        if(num1 != element) element_utils_free(element);
+    } if(expression->refParent) {
+        element_utils_copy(num1, expression->refParent);
+        element_utils_free(num1);
+    }
     else expression->elements[0] = num1;
     return 0;
 }
@@ -54,8 +68,11 @@ int calculate_addsub(SubExpression *expression, const String* digits) {
             addsub_prepare(num1, num1, element, digits);
         } else if(element->type == Operator && element->operator == '-') {
             invert = 1;}
-    } if(expression->refParent) element_utils_copy(num1, expression->refParent);
-    else if(expression->elements[0]->type == Operator) element_utils_copy(num1, expression->elements[0]);
+        if(num1 != element) element_utils_free(element);
+    } if(expression->refParent) {
+        element_utils_copy(num1, expression->refParent);
+        element_utils_free(num1);}
+    else expression->elements[0] = num1;
     return 0;
 }
 
