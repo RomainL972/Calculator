@@ -4,7 +4,6 @@
 #include "string.h"
 #include "element.h"
 #include "string_struct.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 int parse_stdin_init(Expression *tree, const String* digits) {

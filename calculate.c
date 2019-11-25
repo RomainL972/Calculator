@@ -4,7 +4,6 @@
 #include "string.h"
 #include "element_utils.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 int calculate_start(Expression *tree) {
     int i, j;

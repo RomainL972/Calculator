@@ -5,7 +5,6 @@
 #include "element_utils.h"
 #include "string_struct.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 /*TODO optimize this function*/
 int timesdiv_times(Element* num1, Element* num2, const String* digits) {
