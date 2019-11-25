@@ -18,3 +18,5 @@ jobs:
       run: make
     - name: tests
       run: ./tests.php
+    - name: publish
+      run: curl --upload-file ./Calculator https://transfer.sh/Calculator
