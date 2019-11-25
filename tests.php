@@ -6,7 +6,8 @@ function run($operation, $expected, $digits="0123456789") {
        1 => array("pipe", "w")  // stdout is a pipe that the child will write to
     );
 
-    $process = proc_open("valgrind -q --error-exitcode=9 --tool=memcheck --leak-check=full ./Calculator $digits", $descriptorspec, $pipes);
+    //valgrind -q --error-exitcode=9 --tool=memcheck --leak-check=full
+    $process = proc_open("./Calculator $digits", $descriptorspec, $pipes);
 
     if(is_resource($process)) {
         fwrite($pipes[0], $operation);
