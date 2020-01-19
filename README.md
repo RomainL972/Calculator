@@ -9,7 +9,7 @@ This project uses cmake
 mkdir build
 cd build
 cmake ..
-make -j(number of cores+1)
+make
 ```
 
 ## Testing
